@@ -111,6 +111,9 @@ Module.register("MMM-Notion", {
 				case "url":
 					this.createUrl(propContainer, props.properties[propName].url)
 					break;
+				case "last_edited_time":
+					this.createLastEdit(propContainer, props.properties[propName].last_edited_time)
+					break;
 			}
 		})
 		wrapper.appendChild(propContainer)
@@ -145,6 +148,13 @@ Module.register("MMM-Notion", {
 		url.id = "mmm-notion-listview-url"
 		url.innerText = value
 		wrapper.appendChild(url)
+	},
+
+	createLastEdit: function (wrapper, value) {
+		const date = document.createElement("div")
+		date.id = "mmm-notion-listview-last_edited_time"
+		date.innerText = new Date(value).toLocaleDateString()
+		wrapper.appendChild(date)
 	},
 
 	getScripts: function () {
