@@ -138,6 +138,9 @@ Module.register("MMM-Notion", {
 				case "email":
 					this.createEmail(propContainer, props.properties[propName].email)
 					break;
+				case "multi_select":
+					this.createMultiSelect(propContainer, props.properties[propName].multi_select)
+					break;
 				case "date":
 					this.createDate(propContainer, props.properties[propName].date)
 					break;
@@ -239,6 +242,20 @@ Module.register("MMM-Notion", {
 		email.id = "mmm-notion-listview-email"
 		email.innerText = value
 		wrapper.appendChild(email)
+	},
+
+	createMultiSelect: function (wrapper, value) {
+		const multiSelect = document.createElement("div")
+		multiSelect.id = "mmm-notion-listview-multiselect"
+		value.forEach(tag => {
+			const element = document.createElement("div")
+			element.id = "mmm-notion-listview-multiselect-element"
+			element.innerText = tag.name
+			element.style.background = tag.color === "default" ? "lightgray" : tag.color
+			element.style.color = "black"
+			multiSelect.appendChild(element)
+		})
+		wrapper.appendChild(multiSelect)
 	},
 
 	createDate: function (wrapper, value) {

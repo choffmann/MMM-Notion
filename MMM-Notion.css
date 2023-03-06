@@ -45,6 +45,19 @@
   border-radius: 5px;
 }
 
+#mmm-notion-listview-multiselect {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+}
+
+#mmm-notion-listview-multiselect-element {
+  padding: 0 2px;
+  font-size: smaller;
+  border-radius: 5px;
+}
+
 #mmm-notion-listview-person {
   border-radius: 50%;
 }
