@@ -11,6 +11,7 @@ Module.register("MMM-Notion", {
 	defaults: {
 		secret: "",
 		showPersonWithNames: false,
+		dateFormat: "full_date", // full_date, month_day_year, day_month_year, year_month_day, relative
 		databases: [
 			{
 				name: "",
@@ -28,8 +29,9 @@ Module.register("MMM-Notion", {
 	requiresVersion: "2.1.0", // Required version of MagicMirror
 
 	start: function () {
-		var self = this;
+		const self = this;
 		this.databases = [];
+		this.dateFormat = this.file('scripts/DateFormat.js')
 
 		this.sendSocketNotification("HERE_IS_YOUR_CONFIG", this.config);
 		setInterval(function () {
@@ -133,6 +135,9 @@ Module.register("MMM-Notion", {
 				case "email":
 					this.createEmail(propContainer, props.properties[propName].email)
 					break;
+				case "date":
+					this.createDate(propContainer, props.properties[propName].date)
+					break;
 			}
 		})
 		wrapper.appendChild(propContainer)
@@ -179,7 +184,7 @@ Module.register("MMM-Notion", {
 	createLastEdit: function (wrapper, value) {
 		const date = document.createElement("div")
 		date.id = "mmm-notion-listview-last_edited_time"
-		date.innerText = new Date(value).toLocaleDateString()
+		date.innerText = this.convertDateToFormat(value)
 		wrapper.appendChild(date)
 	},
 
@@ -233,8 +238,37 @@ Module.register("MMM-Notion", {
 		wrapper.appendChild(email)
 	},
 
+	createDate: function (wrapper, value) {
+		if (value == null) return
+		const date = document.createElement("div")
+		date.id = "mmm-notion-listview-date"
+		if (value.start != null && value.end != null) {
+			date.innerText = `${this.convertDateToFormat(value.start)} -> ${this.convertDateToFormat(value.end)}`
+		} else if (value.start != null && value.end === null) {
+			date.innerText = this.convertDateToFormat(value.start)
+		}
+		wrapper.appendChild(date)
+	},
+
+	convertDateToFormat: function (dateString) {
+		switch (this.config.dateFormat) {
+			case "full_date":
+				return convertFullDate(dateString)
+			case "month_day_year":
+				return convertMonthDayYear(dateString)
+			case "day_month_year":
+				return convertDayMonthYear(dateString)
+			case "year_month_day":
+				return convertYearMonthDay(dateString)
+			case "relative":
+				return convertRelative(dateString)
+		}
+	},
+
 	getScripts: function () {
-		return [];
+		return [
+			this.file('scripts/DateFormat.js')
+		];
 	},
 
 	getStyles: function () {
