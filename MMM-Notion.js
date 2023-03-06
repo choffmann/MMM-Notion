@@ -51,9 +51,13 @@ Module.register("MMM-Notion", {
 				wrapper.innerText = "Loading..."
 				break;
 			case "success":
-				this.databases.forEach(database => {
-					this.createDatabaseView(wrapper, database)
-				})
+				try {
+					this.databases.forEach(database => {
+						this.createDatabaseView(wrapper, database)
+					})
+				} catch (e) {
+					this.handleError(e)
+				}
 				break;
 			case "error":
 				wrapper.innerText = this.error
@@ -63,17 +67,21 @@ Module.register("MMM-Notion", {
 		return wrapper;
 	},
 
+	handleError: function (error) {
+		this.status = "error"
+		console.log(error)
+		this.error = error
+		this.updateDom();
+	},
+
 	createDatabaseView: function (wrapper, properties) {
 		const container = document.createElement("div")
 		const databaseTitle = document.createElement("div")
-		const divider = document.createElement("hr")
 		container.id = "mmm-notion-database"
 		databaseTitle.id = "mmm-notion-database-title"
-		divider.id = "mmm-notion-database-title-divider"
 		databaseTitle.innerText = `${properties.title}:`
-		if (properties.showTitle === undefined || properties.showTitle ) {
+		if (properties.showTitle === undefined || properties.showTitle) {
 			container.appendChild(databaseTitle)
-			//container.appendChild(divider)
 		}
 		this.createListView(container, properties)
 		wrapper.appendChild(container)
@@ -90,7 +98,7 @@ Module.register("MMM-Notion", {
 			pageElement.id = "mmm-notion-listview-element"
 
 			this.createTitleContainer(pageElement, prop)
-			this.createPropertiesContainer(pageElement, prop, properties.properties)
+			this.createPropertiesContainer(pageElement, prop, properties.layout.properties)
 
 			list.appendChild(pageElement)
 		})
@@ -131,6 +139,7 @@ Module.register("MMM-Notion", {
 		const propContainer = document.createElement("div")
 		propContainer.id = "mmm-notion-listview-propContainer"
 		propNames.forEach(propName => {
+			if (props.properties[propName] === undefined) throw new Error(`Can't find property ${propName} in database ${props.parent.database_id}`)
 			switch (props.properties[propName].type) {
 				case "checkbox":
 					this.createCheckbox(propContainer, props.properties[propName].checkbox)
@@ -372,10 +381,7 @@ Module.register("MMM-Notion", {
 			this.status = "success"
 			this.updateDom();
 		} else if (notification === "MMM-Notion-DATABASE-ERROR") {
-			this.status = "error"
-			console.log(payload)
-			this.error = JSON.parse(payload.body).message
-			this.updateDom();
+			this.handleError(JSON.parse(payload.body).message)
 		}
 	},
 });
