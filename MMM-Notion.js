@@ -79,8 +79,9 @@ Module.register("MMM-Notion", {
 		container.id = "mmm-notion-database"
 		databaseTitle.id = "mmm-notion-database-title"
 		databaseTitle.innerText = `${properties.title}:`
-		if (properties.showTitle === undefined || properties.showTitle) {
-			container.appendChild(databaseTitle)
+		if (properties.title !== undefined) {
+			if (properties.showTitle === undefined || properties.showTitle)
+				container.appendChild(databaseTitle)
 		}
 		this.createListView(container, properties)
 		wrapper.appendChild(container)
