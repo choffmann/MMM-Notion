@@ -43,6 +43,7 @@
   padding: 0 2px;
   font-size: smaller;
   border-radius: 5px;
+  color: white;
 }
 
 #mmm-notion-listview-multiselect {
@@ -54,6 +55,7 @@
 
 #mmm-notion-listview-multiselect-element {
   padding: 0 2px;
+  color: white;
   font-size: smaller;
   border-radius: 5px;
 }
@@ -67,4 +69,25 @@
   flex-direction: row;
   align-items: center;
   gap: 4px;
+}
+
+#mmm-notion-listview-status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  border-radius: 20%;
+}
+
+#mmm-notion-listview-status-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+#mmm-notion-listview-status-text {
+  font-size: smaller;
+  padding: 0 2px;
+  color: white;
+  opacity: 70%;
 }

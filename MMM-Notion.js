@@ -141,6 +141,9 @@ Module.register("MMM-Notion", {
 				case "multi_select":
 					this.createMultiSelect(propContainer, props.properties[propName].multi_select)
 					break;
+				case "status":
+					this.createStatus(propContainer, props.properties[propName].status)
+					break;
 				case "date":
 					this.createDate(propContainer, props.properties[propName].date)
 					break;
@@ -252,10 +255,24 @@ Module.register("MMM-Notion", {
 			element.id = "mmm-notion-listview-multiselect-element"
 			element.innerText = tag.name
 			element.style.background = tag.color === "default" ? "lightgray" : tag.color
-			element.style.color = "black"
 			multiSelect.appendChild(element)
 		})
 		wrapper.appendChild(multiSelect)
+	},
+
+	createStatus: function (wrapper, value) {
+		console.log(value)
+		const container = document.createElement("div")
+		const text = document.createElement("div")
+		const circle = document.createElement("div")
+		container.id = "mmm-notion-listview-status"
+		circle.id = "mmm-notion-listview-status-circle"
+		text.id = "mmm-notion-listview-status-text"
+		text.innerText = value.name
+		circle.style.backgroundColor = value.color === "default" ? "lightgray" : value.color
+		container.appendChild(circle)
+		container.appendChild(text)
+		wrapper.appendChild(container)
 	},
 
 	createDate: function (wrapper, value) {
