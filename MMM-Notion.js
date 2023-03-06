@@ -182,6 +182,7 @@ Module.register("MMM-Notion", {
 	},
 
 	createCheckbox: function (wrapper, value) {
+		if (value == null) return
 		const checkbox = document.createElement("input")
 		checkbox.id = "mmm-notion-listview-checkbox"
 		checkbox.setAttribute("type", "checkbox")
@@ -190,6 +191,7 @@ Module.register("MMM-Notion", {
 	},
 
 	createText: function (wrapper, value) {
+		if (value == null) return
 		const text = document.createElement("div")
 		text.id = "mmm-notion-listview-text"
 		text.innerText = value
@@ -197,6 +199,7 @@ Module.register("MMM-Notion", {
 	},
 
 	createNumber: function (wrapper, value) {
+		if (value == null) return
 		const number = document.createElement("div")
 		number.id = "mmm-notion-listview-number"
 		number.innerText = value
@@ -204,6 +207,7 @@ Module.register("MMM-Notion", {
 	},
 
 	createSelect: function (wrapper, value, color) {
+		if (value == null) return
 		const select = document.createElement("div")
 		select.id = "mmm-notion-listview-select"
 		select.innerText = value
@@ -213,6 +217,7 @@ Module.register("MMM-Notion", {
 	},
 
 	createUrl: function (wrapper, value) {
+		if (value == null) return
 		const url = document.createElement("div")
 		url.id = "mmm-notion-listview-url"
 		url.innerText = value
@@ -220,6 +225,7 @@ Module.register("MMM-Notion", {
 	},
 
 	createEditTime: function (wrapper, value) {
+		if (value == null) return
 		const date = document.createElement("div")
 		date.id = "mmm-notion-listview-last_edited_time"
 		date.innerText = this.convertDateToFormat(value)
@@ -227,6 +233,7 @@ Module.register("MMM-Notion", {
 	},
 
 	createPhoneNumber: function (wrapper, value) {
+		if (value == null) return
 		const phoneNumber = document.createElement("div")
 		phoneNumber.id = "mmm-notion-listview-phone_number"
 		phoneNumber.innerText = value
@@ -234,6 +241,7 @@ Module.register("MMM-Notion", {
 	},
 
 	createMultiPerson: function (wrapper, persons) {
+		if (persons == null) return
 		if (persons.length > 1) {
 			persons.forEach(person => {
 				this.createPerson(wrapper, person.avatar_url, person.name)
@@ -244,12 +252,14 @@ Module.register("MMM-Notion", {
 	},
 
 	createPerson: function (wrapper, imageUrl, name) {
+		if (imageUrl == null) return
 		this.config.showPersonWithNames ?
 			this.createPersonChipName(wrapper, imageUrl, name) :
 			this.createPersonChip(wrapper, imageUrl)
 	},
 
 	createPersonChip: function (wrapper, imageUrl) {
+		if (imageUrl == null) return
 		const person = document.createElement("img")
 		person.id = "mmm-notion-listview-person"
 		person.src = imageUrl
@@ -259,6 +269,7 @@ Module.register("MMM-Notion", {
 	},
 
 	createPersonChipName: function (wrapper, imageUrl, name) {
+		if (imageUrl == null) return
 		const personContainer = document.createElement("div")
 		const personName = document.createElement("div")
 		personContainer.id = "mmm-notion-listview-person_chip_name"
@@ -270,6 +281,7 @@ Module.register("MMM-Notion", {
 	},
 
 	createEmail: function (wrapper, value) {
+		if (value == null) return
 		const email = document.createElement("div")
 		email.id = "mmm-notion-listview-email"
 		email.innerText = value
@@ -277,6 +289,7 @@ Module.register("MMM-Notion", {
 	},
 
 	createMultiSelect: function (wrapper, value) {
+		if (value == null) return
 		const multiSelect = document.createElement("div")
 		multiSelect.id = "mmm-notion-listview-multiselect"
 		value.forEach(tag => {
@@ -290,6 +303,7 @@ Module.register("MMM-Notion", {
 	},
 
 	createStatus: function (wrapper, value) {
+		if (value == null) return
 		const container = document.createElement("div")
 		const text = document.createElement("div")
 		const circle = document.createElement("div")
