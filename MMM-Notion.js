@@ -102,6 +102,9 @@ Module.register("MMM-Notion", {
 				case "checkbox":
 					this.createCheckbox(propContainer, props.properties[propName].checkbox)
 					break;
+				case "number":
+					this.createNumber(propContainer, props.properties[propName].number)
+					break;
 			}
 		})
 		wrapper.appendChild(propContainer)
@@ -113,6 +116,13 @@ Module.register("MMM-Notion", {
 		checkbox.setAttribute("type", "checkbox")
 		checkbox.checked = value
 		wrapper.appendChild(checkbox)
+	},
+
+	createNumber: function (wrapper, value) {
+		const number = document.createElement("div")
+		number.id = "mmm-notion-listview-number"
+		number.innerText = value
+		wrapper.appendChild(number)
 	},
 
 	getScripts: function () {
