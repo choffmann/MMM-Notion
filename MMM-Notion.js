@@ -116,7 +116,10 @@ Module.register("MMM-Notion", {
 					this.createUrl(propContainer, props.properties[propName].url)
 					break;
 				case "last_edited_time":
-					this.createLastEdit(propContainer, props.properties[propName].last_edited_time)
+					this.createEditTime(propContainer, props.properties[propName].last_edited_time)
+					break;
+				case "created_time":
+					this.createEditTime(propContainer, props.properties[propName].created_time)
 					break;
 				case "phone_number":
 					this.createPhoneNumber(propContainer, props.properties[propName].phone_number)
@@ -181,7 +184,7 @@ Module.register("MMM-Notion", {
 		wrapper.appendChild(url)
 	},
 
-	createLastEdit: function (wrapper, value) {
+	createEditTime: function (wrapper, value) {
 		const date = document.createElement("div")
 		date.id = "mmm-notion-listview-last_edited_time"
 		date.innerText = this.convertDateToFormat(value)
