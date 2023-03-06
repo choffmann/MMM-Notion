@@ -108,6 +108,9 @@ Module.register("MMM-Notion", {
 				case "select":
 					this.createSelect(propContainer, props.properties[propName].select.name, props.properties[propName].select.color)
 					break;
+				case "url":
+					this.createUrl(propContainer, props.properties[propName].url)
+					break;
 			}
 		})
 		wrapper.appendChild(propContainer)
@@ -135,6 +138,13 @@ Module.register("MMM-Notion", {
 		select.style.background = color
 		select.style.color = "black"
 		wrapper.appendChild(select)
+	},
+
+	createUrl: function (wrapper, value) {
+		const url = document.createElement("div")
+		url.id = "mmm-notion-listview-url"
+		url.innerText = value
+		wrapper.appendChild(url)
 	},
 
 	getScripts: function () {
