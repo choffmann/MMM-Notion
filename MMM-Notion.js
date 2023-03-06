@@ -120,7 +120,12 @@ Module.register("MMM-Notion", {
 					this.createPhoneNumber(propContainer, props.properties[propName].phone_number)
 					break;
 				case "created_by":
-					this.createPerson(propContainer, props.properties[propName].created_by.avatar_url, props.properties[propName].created_by.name)
+					if (props.properties[propName].created_by.object === "user")
+						this.createPerson(propContainer, props.properties[propName].created_by.avatar_url, props.properties[propName].created_by.name)
+					break;
+				case "last_edited_by":
+					if (props.properties[propName].last_edited_by.object === "user")
+						this.createPerson(propContainer, props.properties[propName].last_edited_by.avatar_url, props.properties[propName].last_edited_by.name)
 					break;
 				case "people":
 					this.createMultiPerson(propContainer, props.properties[propName].people)
