@@ -261,7 +261,6 @@ Module.register("MMM-Notion", {
 	},
 
 	createStatus: function (wrapper, value) {
-		console.log(value)
 		const container = document.createElement("div")
 		const text = document.createElement("div")
 		const circle = document.createElement("div")
