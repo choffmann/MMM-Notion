@@ -125,6 +125,9 @@ Module.register("MMM-Notion", {
 				case "people":
 					this.createMultiPerson(propContainer, props.properties[propName].people)
 					break;
+				case "email":
+					this.createEmail(propContainer, props.properties[propName].email)
+					break;
 			}
 		})
 		wrapper.appendChild(propContainer)
@@ -216,6 +219,13 @@ Module.register("MMM-Notion", {
 		this.createPersonChip(personContainer, imageUrl)
 		personContainer.appendChild(personName)
 		wrapper.appendChild(personContainer)
+	},
+
+	createEmail: function (wrapper, value) {
+		const email = document.createElement("div")
+		email.id = "mmm-notion-listview-email"
+		email.innerText = value
+		wrapper.appendChild(email)
 	},
 
 	getScripts: function () {
