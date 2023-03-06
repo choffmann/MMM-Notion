@@ -24,17 +24,23 @@
 #mmm-notion-listview-titleContainer {
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: flex-start;
   align-items: center;
 }
 
 #mmm-notion-listview-propContainer {
   display: flex;
   flex-direction: row;
-  justify-content: right;
+  gap: 6px;
   align-items: center;
 }
 
 #mmm-notion-listview-emoji {
   padding-right: 6px;
+}
+
+#mmm-notion-listview-select {
+  padding: 0 2px;
+  font-size: smaller;
+  border-radius: 5px;
 }

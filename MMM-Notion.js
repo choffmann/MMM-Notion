@@ -105,6 +105,9 @@ Module.register("MMM-Notion", {
 				case "number":
 					this.createNumber(propContainer, props.properties[propName].number)
 					break;
+				case "select":
+					this.createSelect(propContainer, props.properties[propName].select.name, props.properties[propName].select.color)
+					break;
 			}
 		})
 		wrapper.appendChild(propContainer)
@@ -123,6 +126,15 @@ Module.register("MMM-Notion", {
 		number.id = "mmm-notion-listview-number"
 		number.innerText = value
 		wrapper.appendChild(number)
+	},
+
+	createSelect: function (wrapper, value, color) {
+		const select = document.createElement("div")
+		select.id = "mmm-notion-listview-select"
+		select.innerText = value
+		select.style.background = color
+		select.style.color = "black"
+		wrapper.appendChild(select)
 	},
 
 	getScripts: function () {
