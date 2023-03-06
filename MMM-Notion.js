@@ -23,8 +23,7 @@ Module.register("MMM-Notion", {
 				sorts: []
 			}
 		],
-		updateInterval: 60000,
-		retryDelay: 5000
+		updateInterval: 60000
 	},
 
 	requiresVersion: "2.1.0", // Required version of MagicMirror
