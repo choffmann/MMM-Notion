@@ -75,7 +75,7 @@ Module.register("MMM-Notion", {
 	createTitleContainer: function (wrapper, props) {
 		const titleContainer = document.createElement("div")
 		titleContainer.id = "mmm-notion-listview-titleContainer"
-		this.createTitleEmoji(titleContainer, props.icon.emoji)
+		this.createTitleEmoji(titleContainer, props.icon)
 		this.createTitle(titleContainer, this.findTitleProp(props.properties))
 		wrapper.appendChild(titleContainer)
 	},
@@ -87,10 +87,11 @@ Module.register("MMM-Notion", {
 		wrapper.appendChild(titleDom)
 	},
 
-	createTitleEmoji: function (wrapper, emoji) {
+	createTitleEmoji: function (wrapper, icon) {
+		if (icon === null) return;
 		const emojiDom = document.createElement("div")
 		emojiDom.id = "mmm-notion-listview-emoji"
-		emojiDom.innerText = emoji
+		emojiDom.innerText = icon.emoji
 		wrapper.appendChild(emojiDom)
 	},
 
