@@ -5,43 +5,58 @@
  * MIT Licensed.
  */
 
-var NodeHelper = require("node_helper");
+const NodeHelper = require("node_helper");
+const Log = require("logger");
+const {Client} = require("@notionhq/client")
 
 module.exports = NodeHelper.create({
+	start: function () {
+		Log.log(`${this.name} is started`);
+	},
 
-	// Override socketNotificationReceived method.
-
-	/* socketNotificationReceived(notification, payload)
-	 * This method is called when a socket notification arrives.
-	 *
-	 * argument notification string - The identifier of the noitication.
-	 * argument payload mixed - The payload of the notification.
-	 */
-	socketNotificationReceived: function(notification, payload) {
-		if (notification === "MMM-Notion-NOTIFICATION_TEST") {
-			console.log("Working notification system. Notification:", notification, "payload: ", payload);
-			// Send notification
-			this.sendNotificationTest(this.anotherFunction()); //Is possible send objects :)
+	socketNotificationReceived: async function (notification, payload) {
+		switch (notification) {
+			case "HERE_IS_YOUR_CONFIG":
+				await this.makeRequest(payload.secret, payload.databases);
+				break;
+			case "UPDATE_PLEASE":
+				await this.makeRequest();
+				break;
 		}
 	},
 
-	// Example function send notification test
-	sendNotificationTest: function(payload) {
-		this.sendSocketNotification("MMM-Notion-NOTIFICATION_TEST", payload);
+	makeRequest: async function (secret, databases) {
+		const notion = new Client({auth: secret})
+		for (const database of databases) {
+			const data = await this.makeQuery(notion, database)
+			if (database.data === undefined) database.data = []
+			database.data.push(data.results)
+		}
+		this.sendSocketNotification("MMM-Notion-DATABASE-DATA", databases);
 	},
 
-	// this you can create extra routes for your module
-	extraRoutes: function() {
-		var self = this;
-		this.expressApp.get("/MMM-Notion/extra_route", function(req, res) {
-			// call another function
-			values = self.anotherFunction();
-			res.send(values);
-		});
+	makeQuery: async function (notion, database) {
+		return await notion.databases.query(this.setQueryArguments(database))
+			.catch(this.handleError)
 	},
 
-	// Test another function
-	anotherFunction: function() {
-		return {date: new Date()};
+	setQueryArguments: function (database) {
+		// Check if database.filter is empty
+		if (Object.keys(database.filter).length === 0) {
+			return {
+				database_id: database.id,
+				sorts: database.sorts
+			}
+		} else {
+			return {
+				database_id: database.id,
+				filter: database.filter,
+				sorts: database.sorts
+			}
+		}
+	},
+
+	handleError: function (error) {
+		Log.error(error)
 	}
 });

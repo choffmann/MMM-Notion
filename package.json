@@ -1,9 +1,11 @@
 {
-  "name": "MMM-Notion",
-  "version": "1.0.0",
-  "description": "Todo: Insert description here!",
-  "main": "MMM-Notion.js",
-  "author": "Cedrik Hoffmann",
-  "license": "MIT"
-
+	"name": "MMM-Notion",
+	"version": "1.0.0",
+	"description": "Todo: Insert description here!",
+	"main": "MMM-Notion.js",
+	"author": "Cedrik Hoffmann",
+	"license": "MIT",
+	"dependencies": {
+		"@notionhq/client": "^1.0.1"
+	}
 }
