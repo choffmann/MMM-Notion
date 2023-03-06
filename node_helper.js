@@ -30,7 +30,7 @@ module.exports = NodeHelper.create({
 		for (const database of databases) {
 			const data = await this.makeQuery(notion, database)
 			if (database.data === undefined) database.data = []
-			database.data.push(data.results)
+			data.results.forEach(e => database.data.push(e))
 		}
 		this.sendSocketNotification("MMM-Notion-DATABASE-DATA", databases);
 	},
