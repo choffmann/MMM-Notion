@@ -97,7 +97,6 @@ Module.register("MMM-Notion", {
 	createPropertiesContainer: function (wrapper, props, propNames) {
 		const propContainer = document.createElement("div")
 		propContainer.id = "mmm-notion-listview-propContainer"
-		console.log(props)
 		propNames.forEach(propName => {
 			switch (props.properties[propName].type) {
 				case "checkbox":
