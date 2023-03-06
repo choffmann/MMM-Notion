@@ -44,3 +44,14 @@
   font-size: smaller;
   border-radius: 5px;
 }
+
+#mmm-notion-listview-person {
+  border-radius: 50%;
+}
+
+#mmm-notion-listview-person_chip_name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}

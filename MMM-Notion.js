@@ -10,6 +10,7 @@
 Module.register("MMM-Notion", {
 	defaults: {
 		secret: "",
+		showPersonWithNames: false,
 		databases: [
 			{
 				name: "",
@@ -118,6 +119,12 @@ Module.register("MMM-Notion", {
 				case "phone_number":
 					this.createPhoneNumber(propContainer, props.properties[propName].phone_number)
 					break;
+				case "created_by":
+					this.createPerson(propContainer, props.properties[propName].created_by.avatar_url, props.properties[propName].created_by.name)
+					break;
+				case "people":
+					this.createMultiPerson(propContainer, props.properties[propName].people)
+					break;
 			}
 		})
 		wrapper.appendChild(propContainer)
@@ -173,6 +180,42 @@ Module.register("MMM-Notion", {
 		phoneNumber.id = "mmm-notion-listview-phone_number"
 		phoneNumber.innerText = value
 		wrapper.appendChild(phoneNumber)
+	},
+
+	createMultiPerson: function (wrapper, persons) {
+		if (persons.length > 1) {
+			persons.forEach(person => {
+				this.createPerson(wrapper, person.avatar_url, person.name)
+			})
+		} else {
+			this.createPerson(wrapper, persons[0].avatar_url, persons[0].name)
+		}
+	},
+
+	createPerson: function (wrapper, imageUrl, name) {
+		this.config.showPersonWithNames ?
+			this.createPersonChipName(wrapper, imageUrl, name) :
+			this.createPersonChip(wrapper, imageUrl)
+	},
+
+	createPersonChip: function (wrapper, imageUrl) {
+		const person = document.createElement("img")
+		person.id = "mmm-notion-listview-person"
+		person.src = imageUrl
+		person.width = 20
+		person.height = 20
+		wrapper.appendChild(person)
+	},
+
+	createPersonChipName: function (wrapper, imageUrl, name) {
+		const personContainer = document.createElement("div")
+		const personName = document.createElement("div")
+		personContainer.id = "mmm-notion-listview-person_chip_name"
+		personName.id = "mmm-notion-listview-person_name"
+		personName.innerText = name
+		this.createPersonChip(personContainer, imageUrl)
+		personContainer.appendChild(personName)
+		wrapper.appendChild(personContainer)
 	},
 
 	getScripts: function () {
