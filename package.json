@@ -1,9 +1,17 @@
 {
 	"name": "MMM-Notion",
 	"version": "1.0.0",
-	"description": "Todo: Insert description here!",
+	"description": "Display your Notion database on the MagicMirror",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/choffmann/MMM-Notion.git"
+	},
+	"bugs": {
+		"url": "https://github.com/choffmann/MMM-Notion/issues"
+	},
 	"main": "MMM-Notion.js",
 	"author": "Cedrik Hoffmann",
+	"homepage": "https://github.com/choffmann/MMM-Notion#readme",
 	"license": "MIT",
 	"dependencies": {
 		"@notionhq/client": "^1.0.1"
