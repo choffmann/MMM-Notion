@@ -20,7 +20,7 @@ module.exports = NodeHelper.create({
 				await this.makeRequest(payload.secret, payload.databases);
 				break;
 			case "UPDATE_PLEASE":
-				await this.makeRequest();
+				await this.makeRequest(payload.secret, payload.databases);
 				break;
 		}
 	},

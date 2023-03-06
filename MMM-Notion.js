@@ -36,7 +36,7 @@ Module.register("MMM-Notion", {
 
 		this.sendSocketNotification("HERE_IS_YOUR_CONFIG", this.config);
 		setInterval(function () {
-			self.sendSocketNotification("UPDATE_PLEASE");
+			self.sendSocketNotification("UPDATE_PLEASE", self.config);
 			self.updateDom();
 		}, this.config.updateInterval);
 	},
