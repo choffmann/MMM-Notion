@@ -14,7 +14,8 @@ Module.register("MMM-Notion", {
 		dateFormat: "full_date", // full_date, month_day_year, day_month_year, year_month_day, relative
 		databases: [
 			{
-				name: "",
+				showTitle: true,
+				title: "",
 				id: "",
 				layout: "",
 				properties: [],
@@ -51,7 +52,7 @@ Module.register("MMM-Notion", {
 				break;
 			case "success":
 				this.databases.forEach(database => {
-					this.createListView(wrapper, database)
+					this.createDatabaseView(wrapper, database)
 				})
 				break;
 			case "error":
@@ -60,6 +61,22 @@ Module.register("MMM-Notion", {
 		}
 
 		return wrapper;
+	},
+
+	createDatabaseView: function (wrapper, properties) {
+		const container = document.createElement("div")
+		const databaseTitle = document.createElement("div")
+		const divider = document.createElement("hr")
+		container.id = "mmm-notion-database"
+		databaseTitle.id = "mmm-notion-database-title"
+		divider.id = "mmm-notion-database-title-divider"
+		databaseTitle.innerText = `${properties.title}:`
+		if (properties.showTitle === undefined || properties.showTitle ) {
+			container.appendChild(databaseTitle)
+			//container.appendChild(divider)
+		}
+		this.createListView(container, properties)
+		wrapper.appendChild(container)
 	},
 
 	createListView: function (wrapper, properties) {

@@ -9,6 +9,21 @@
  *
  */
 
+#mmm-notion-database {
+  margin-bottom: 16px;
+}
+
+#mmm-notion-database-title {
+  font-size: smaller;
+  padding-bottom: 0;
+  font-weight: bold;
+}
+
+#mmm-notion-database-title-divider {
+  padding: 0;
+  margin: 0;
+}
+
 #mmm-notion-listview {
   display: flex;
   flex-direction: column;
