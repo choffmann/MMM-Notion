@@ -115,6 +115,9 @@ Module.register("MMM-Notion", {
 				case "last_edited_time":
 					this.createLastEdit(propContainer, props.properties[propName].last_edited_time)
 					break;
+				case "phone_number":
+					this.createPhoneNumber(propContainer, props.properties[propName].phone_number)
+					break;
 			}
 		})
 		wrapper.appendChild(propContainer)
@@ -126,6 +129,13 @@ Module.register("MMM-Notion", {
 		checkbox.setAttribute("type", "checkbox")
 		checkbox.checked = value
 		wrapper.appendChild(checkbox)
+	},
+
+	createText: function (wrapper, value) {
+		const text = document.createElement("div")
+		text.id = "mmm-notion-listview-text"
+		text.innerText = value
+		wrapper.appendChild(text)
 	},
 
 	createNumber: function (wrapper, value) {
@@ -156,6 +166,13 @@ Module.register("MMM-Notion", {
 		date.id = "mmm-notion-listview-last_edited_time"
 		date.innerText = new Date(value).toLocaleDateString()
 		wrapper.appendChild(date)
+	},
+
+	createPhoneNumber: function (wrapper, value) {
+		const phoneNumber = document.createElement("div")
+		phoneNumber.id = "mmm-notion-listview-phone_number"
+		phoneNumber.innerText = value
+		wrapper.appendChild(phoneNumber)
 	},
 
 	getScripts: function () {
