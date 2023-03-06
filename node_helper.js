@@ -27,22 +27,25 @@ module.exports = NodeHelper.create({
 
 	makeRequest: async function (secret, databases) {
 		const notion = new Client({auth: secret})
-		for (const database of databases) {
-			const data = await this.makeQuery(notion, database)
-			if (database.data === undefined) database.data = []
-			data.results.forEach(e => database.data.push(e))
+		try {
+			for (const database of databases) {
+				const data = await this.makeQuery(notion, database)
+				if (database.data === undefined) database.data = []
+				data.results.forEach(e => database.data.push(e))
+			}
+			this.sendSocketNotification("MMM-Notion-DATABASE-DATA", databases);
+		} catch (e) {
+			this.handleError(e)
 		}
-		this.sendSocketNotification("MMM-Notion-DATABASE-DATA", databases);
 	},
 
 	makeQuery: async function (notion, database) {
 		return await notion.databases.query(this.setQueryArguments(database))
-			.catch(this.handleError)
 	},
 
 	setQueryArguments: function (database) {
 		// Check if database.filter is empty
-		if (Object.keys(database.filter).length === 0) {
+		if (database.filter === undefined || database.filter == null || Object.keys(database.filter).length === 0) {
 			return {
 				database_id: database.id,
 				sorts: database.sorts
@@ -58,5 +61,6 @@ module.exports = NodeHelper.create({
 
 	handleError: function (error) {
 		Log.error(error)
+		this.sendSocketNotification("MMM-Notion-DATABASE-ERROR", error);
 	}
 });

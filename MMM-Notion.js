@@ -31,7 +31,8 @@ Module.register("MMM-Notion", {
 	start: function () {
 		const self = this;
 		this.databases = [];
-		this.dateFormat = this.file('scripts/DateFormat.js')
+		this.status = "loading"
+		this.error = ""
 
 		this.sendSocketNotification("HERE_IS_YOUR_CONFIG", this.config);
 		setInterval(function () {
@@ -44,9 +45,20 @@ Module.register("MMM-Notion", {
 		// create element wrapper for show into the module
 		const wrapper = document.createElement("div");
 		wrapper.id = "mmm-notion";
-		this.databases.forEach(database => {
-			this.createListView(wrapper, database)
-		})
+		switch (this.status) {
+			case "loading":
+				wrapper.innerText = "Loading..."
+				break;
+			case "success":
+				this.databases.forEach(database => {
+					this.createListView(wrapper, database)
+				})
+				break;
+			case "error":
+				wrapper.innerText = this.error
+				break
+		}
+
 		return wrapper;
 	},
 
@@ -326,6 +338,12 @@ Module.register("MMM-Notion", {
 	socketNotificationReceived: function (notification, payload) {
 		if (notification === "MMM-Notion-DATABASE-DATA") {
 			this.databases = payload;
+			this.status = "success"
+			this.updateDom();
+		} else if (notification === "MMM-Notion-DATABASE-ERROR") {
+			this.status = "error"
+			console.log(payload)
+			this.error = JSON.parse(payload.body).message
 			this.updateDom();
 		}
 	},
