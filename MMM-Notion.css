@@ -8,3 +8,33 @@
  * Custom here your css module
  *
  */
+
+#mmm-notion-listview {
+  display: flex;
+  flex-direction: column;
+}
+
+#mmm-notion-listview-element {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#mmm-notion-listview-titleContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
+
+#mmm-notion-listview-propContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
+}
+
+#mmm-notion-listview-emoji {
+  padding-right: 6px;
+}
