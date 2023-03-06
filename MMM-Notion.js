@@ -139,7 +139,7 @@ Module.register("MMM-Notion", {
 		const propContainer = document.createElement("div")
 		propContainer.id = "mmm-notion-listview-propContainer"
 		propNames.forEach(propName => {
-			if (props.properties[propName] === undefined) throw new Error(`Can't find property ${propName} in database ${props.parent.database_id}`)
+			if (props.properties[propName] === undefined) throw new Error(`Can't find property '${propName}' in database '${props.parent.database_id}'`)
 			switch (props.properties[propName].type) {
 				case "checkbox":
 					this.createCheckbox(propContainer, props.properties[propName].checkbox)
