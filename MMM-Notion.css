@@ -43,7 +43,7 @@
   align-items: center;
 }
 
-#mmm-notion-listview-propContainer {
+#mmm-notion-listview #mmm-notion-property {
   display: flex;
   flex-direction: row;
   gap: 6px;
@@ -54,39 +54,39 @@
   padding-right: 6px;
 }
 
-#mmm-notion-listview-select {
+#mmm-notion-property-select {
   padding: 0 2px;
   font-size: smaller;
   border-radius: 5px;
   color: white;
 }
 
-#mmm-notion-listview-multiselect {
+#mmm-notion-property-multiselect {
   display: flex;
   flex-direction: row;
   gap: 6px;
   align-items: center;
 }
 
-#mmm-notion-listview-multiselect-element {
+#mmm-notion-property-multiselect-element {
   padding: 0 2px;
   color: white;
   font-size: smaller;
   border-radius: 5px;
 }
 
-#mmm-notion-listview-person {
+#mmm-notion-property-person {
   border-radius: 50%;
 }
 
-#mmm-notion-listview-person_chip_name {
+#mmm-notion-property-person_chip_name {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 4px;
 }
 
-#mmm-notion-listview-status {
+#mmm-notion-property-status {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -94,15 +94,20 @@
   border-radius: 20%;
 }
 
-#mmm-notion-listview-status-circle {
+#mmm-notion-property-status-circle {
   width: 8px;
   height: 8px;
   border-radius: 50%;
 }
 
-#mmm-notion-listview-status-text {
+#mmm-notion-property-status-text {
   font-size: smaller;
   padding: 0 2px;
   color: white;
   opacity: 70%;
+}
+
+#mmm-notion-property-text {
+  padding: 0;
+  margin: 0;
 }

@@ -19,25 +19,6 @@ const convertHours = (date) => ('0' + (date.getHours())).slice(-2)
 const convertMinutes = (date) => ('0' + (date.getMinutes())).slice(-2)
 const convertTime = (date) => `${convertHours(date)}:${convertMinutes(date)}`
 const dateEqual = (date1, date2) => date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear()
-const isToday = (date) => {
-	const today = new Date()
-	return dateEqual(date, today)
-}
-const isTomorrow = (date) => {
-	const today = new Date()
-	const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)
-	return dateEqual(date, tomorrow)
-}
-const isInWeek = (date) => {
-	const today = new Date()
-	const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7)
-	return nextWeek > date
-}
-const isExactOneWeek = (date) => {
-	const today = new Date()
-	const oneWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7)
-	return dateEqual(date, oneWeek)
-}
 
 const convertFullDate = (dateString) => {
 	const date = new Date(dateString)
@@ -65,16 +46,24 @@ const convertYearMonthDay = (dateString) => {
 
 const convertRelative = (dateString) => {
 	const date = new Date(dateString)
-	if (isToday(date)) {
-		return dateTimeFormat(dateString, 'Today')
-	} else if (isTomorrow(date)) {
-		return dateTimeFormat(dateString, 'Tomorrow')
-	} else if (isInWeek(date)) {
-		return dateTimeFormat(dateString, convertDayName(date))
-	} else if (isExactOneWeek(date)) {
-		return dateTimeFormat(dateString, `Next ${convertDayName(date)}`)
+	const now = new Date();
+	const oneDayMs = 24 * 60 * 60 * 1000;
+	const diffMs = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+	const diffDays = Math.floor(diffMs / oneDayMs);
+	const dayOfWeek = date.toLocaleDateString('en-US', {weekday: 'long'});
+
+	if (diffDays === 0) {
+		return dateTimeFormat(dateString, 'Today');
+	} else if (diffDays === -1) {
+		return dateTimeFormat(dateString, 'Yesterday');
+	} else if (diffDays === 1) {
+		return dateTimeFormat(dateString, 'Tomorrow');
+	} else if (diffDays > 1 && diffDays <= 7) {
+		return dateTimeFormat(dateString, `Next ${dayOfWeek}`);
+	} else if (diffDays < -1 && diffDays >= -7) {
+		return dateTimeFormat(dateString, `Last ${dayOfWeek}`);
 	} else {
-		return convertMonthDayYear(dateString)
+		return convertFullDate(dateString)
 	}
 }
 

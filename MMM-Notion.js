@@ -10,10 +10,10 @@
 Module.register("MMM-Notion", {
 	defaults: {
 		secret: "",
-		showPersonWithNames: false,
-		dateFormat: "full_date", // full_date, month_day_year, day_month_year, year_month_day, relative
 		databases: [
 			{
+				showPersonWithNames: false,
+				dateFormat: "full_date", // full_date, month_day_year, day_month_year, year_month_day, relative
 				showTitle: true,
 				title: "",
 				id: "",
@@ -90,51 +90,8 @@ Module.register("MMM-Notion", {
 	},
 
 	createListView: function (wrapper, properties) {
-		// Name.........................Tag Tag
-		const list = document.createElement("div")
-		wrapper.appendChild(list)
-		list.id = "mmm-notion-listview"
-
-		properties.data.forEach(prop => {
-			const pageElement = document.createElement("div")
-			pageElement.id = "mmm-notion-listview-element"
-
-			this.createTitleContainer(pageElement, prop)
-			this.createPropertiesContainer(pageElement, prop, properties.layout.properties)
-
-			list.appendChild(pageElement)
-		})
-	},
-
-	findTitleProp: function (properties) {
-		for (const key in properties) {
-			if (properties.hasOwnProperty.call(properties, key) && properties[key].hasOwnProperty('type') && properties[key].type === "title") {
-				return properties[key].title[0].text.content
-			}
-		}
-	},
-
-	createTitleContainer: function (wrapper, props) {
-		const titleContainer = document.createElement("div")
-		titleContainer.id = "mmm-notion-listview-titleContainer"
-		this.createTitleEmoji(titleContainer, props.icon)
-		this.createTitle(titleContainer, this.findTitleProp(props.properties))
-		wrapper.appendChild(titleContainer)
-	},
-
-	createTitle: function (wrapper, title) {
-		const titleDom = document.createElement("div")
-		titleDom.id = "mmm-notion-listview-title"
-		titleDom.innerText = title
-		wrapper.appendChild(titleDom)
-	},
-
-	createTitleEmoji: function (wrapper, icon) {
-		if (icon === null) return;
-		const emojiDom = document.createElement("div")
-		emojiDom.id = "mmm-notion-listview-emoji"
-		emojiDom.innerText = icon.emoji
-		wrapper.appendChild(emojiDom)
+		const listView = new ListView(properties)
+		wrapper.appendChild(listView.wrapper)
 	},
 
 	createPropertiesContainer: function (wrapper, props, propNames) {
@@ -192,172 +149,12 @@ Module.register("MMM-Notion", {
 		wrapper.appendChild(propContainer)
 	},
 
-	createCheckbox: function (wrapper, value) {
-		if (value == null) return
-		const checkbox = document.createElement("input")
-		checkbox.id = "mmm-notion-listview-checkbox"
-		checkbox.setAttribute("type", "checkbox")
-		checkbox.checked = value
-		wrapper.appendChild(checkbox)
-	},
-
-	createText: function (wrapper, value) {
-		if (value == null) return
-		const text = document.createElement("div")
-		text.id = "mmm-notion-listview-text"
-		text.innerText = value
-		wrapper.appendChild(text)
-	},
-
-	createNumber: function (wrapper, value) {
-		if (value == null) return
-		const number = document.createElement("div")
-		number.id = "mmm-notion-listview-number"
-		number.innerText = value
-		wrapper.appendChild(number)
-	},
-
-	createSelect: function (wrapper, value, color) {
-		if (value == null) return
-		const select = document.createElement("div")
-		select.id = "mmm-notion-listview-select"
-		select.innerText = value
-		select.style.background = color
-		select.style.color = "black"
-		wrapper.appendChild(select)
-	},
-
-	createUrl: function (wrapper, value) {
-		if (value == null) return
-		const url = document.createElement("div")
-		url.id = "mmm-notion-listview-url"
-		url.innerText = value
-		wrapper.appendChild(url)
-	},
-
-	createEditTime: function (wrapper, value) {
-		if (value == null) return
-		const date = document.createElement("div")
-		date.id = "mmm-notion-listview-last_edited_time"
-		date.innerText = this.convertDateToFormat(value)
-		wrapper.appendChild(date)
-	},
-
-	createPhoneNumber: function (wrapper, value) {
-		if (value == null) return
-		const phoneNumber = document.createElement("div")
-		phoneNumber.id = "mmm-notion-listview-phone_number"
-		phoneNumber.innerText = value
-		wrapper.appendChild(phoneNumber)
-	},
-
-	createMultiPerson: function (wrapper, persons) {
-		if (persons == null) return
-		if (persons.length > 1) {
-			persons.forEach(person => {
-				this.createPerson(wrapper, person.avatar_url, person.name)
-			})
-		} else {
-			this.createPerson(wrapper, persons[0].avatar_url, persons[0].name)
-		}
-	},
-
-	createPerson: function (wrapper, imageUrl, name) {
-		if (imageUrl == null) return
-		this.config.showPersonWithNames ?
-			this.createPersonChipName(wrapper, imageUrl, name) :
-			this.createPersonChip(wrapper, imageUrl)
-	},
-
-	createPersonChip: function (wrapper, imageUrl) {
-		if (imageUrl == null) return
-		const person = document.createElement("img")
-		person.id = "mmm-notion-listview-person"
-		person.src = imageUrl
-		person.width = 20
-		person.height = 20
-		wrapper.appendChild(person)
-	},
-
-	createPersonChipName: function (wrapper, imageUrl, name) {
-		if (imageUrl == null) return
-		const personContainer = document.createElement("div")
-		const personName = document.createElement("div")
-		personContainer.id = "mmm-notion-listview-person_chip_name"
-		personName.id = "mmm-notion-listview-person_name"
-		personName.innerText = name
-		this.createPersonChip(personContainer, imageUrl)
-		personContainer.appendChild(personName)
-		wrapper.appendChild(personContainer)
-	},
-
-	createEmail: function (wrapper, value) {
-		if (value == null) return
-		const email = document.createElement("div")
-		email.id = "mmm-notion-listview-email"
-		email.innerText = value
-		wrapper.appendChild(email)
-	},
-
-	createMultiSelect: function (wrapper, value) {
-		if (value == null) return
-		const multiSelect = document.createElement("div")
-		multiSelect.id = "mmm-notion-listview-multiselect"
-		value.forEach(tag => {
-			const element = document.createElement("div")
-			element.id = "mmm-notion-listview-multiselect-element"
-			element.innerText = tag.name
-			element.style.background = tag.color === "default" ? "lightgray" : tag.color
-			multiSelect.appendChild(element)
-		})
-		wrapper.appendChild(multiSelect)
-	},
-
-	createStatus: function (wrapper, value) {
-		if (value == null) return
-		const container = document.createElement("div")
-		const text = document.createElement("div")
-		const circle = document.createElement("div")
-		container.id = "mmm-notion-listview-status"
-		circle.id = "mmm-notion-listview-status-circle"
-		text.id = "mmm-notion-listview-status-text"
-		text.innerText = value.name
-		circle.style.backgroundColor = value.color === "default" ? "lightgray" : value.color
-		container.appendChild(circle)
-		container.appendChild(text)
-		wrapper.appendChild(container)
-	},
-
-	createDate: function (wrapper, value) {
-		if (value == null) return
-		const date = document.createElement("div")
-		date.id = "mmm-notion-listview-date"
-		if (value.start != null && value.end != null) {
-			date.innerText = `${this.convertDateToFormat(value.start)} -> ${this.convertDateToFormat(value.end)}`
-		} else if (value.start != null && value.end === null) {
-			date.innerText = this.convertDateToFormat(value.start)
-		}
-		wrapper.appendChild(date)
-	},
-
-	convertDateToFormat: function (dateString) {
-		switch (this.config.dateFormat) {
-			case "full_date":
-				return convertFullDate(dateString)
-			case "month_day_year":
-				return convertMonthDayYear(dateString)
-			case "day_month_year":
-				return convertDayMonthYear(dateString)
-			case "year_month_day":
-				return convertYearMonthDay(dateString)
-			case "relative":
-				return convertRelative(dateString)
-		}
-	},
-
 	getScripts: function () {
 		return [
-			this.file('scripts/DateFormat.js')
+			this.file('scripts/DateFormat.js'),
+			this.file('scripts/layout/listview/ListView.js'),
+			this.file('scripts/layout/listview/ListViewElement.js'),
+			this.file('scripts/layout/PropertiesView.js')
 		];
 	},
 
