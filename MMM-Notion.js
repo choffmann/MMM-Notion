@@ -17,8 +17,10 @@ Module.register("MMM-Notion", {
 				showTitle: true,
 				title: "",
 				id: "",
-				layout: "",
-				properties: [],
+				layout: {
+					type: "listview",
+					properties: []
+				},
 				filter: {},
 				sorts: []
 			}
