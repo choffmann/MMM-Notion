@@ -1,8 +1,7 @@
 # MMM-Notion
 
 This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/).
-
-Todo: Insert description here!
+This module shows you your favorite Notion databases on MagicMirror. All you need is to create a [Notion integration](https://www.notion.com/my-integrations), download this module and connect your Notion database. :raised_hands:
 
 ## Using the module
 
