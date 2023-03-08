@@ -3,6 +3,8 @@
 This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/).
 This module shows you your favorite Notion databases on MagicMirror. All you need is to create a [Notion integration](https://www.notion.com/my-integrations), download this module and connect your Notion database. :raised_hands:
 
+![](img/mmm-notion-showcase.png)
+
 ## How to use
 
 To show your Notion Database, you need to create a [Notion integration](https://www.notion.com/my-integrations). To do that, you need Admin level access on your Workspace. Notion has a very
