@@ -25,8 +25,8 @@ class ListView {
 	createElements() {
 		this.databaseProps.data.forEach(props => {
 			const config = {
-				dateFormat: this.databaseProps.dateFormat,
-				showPersonWithNames: this.databaseProps.showPersonWithNames,
+				dateFormat: this.databaseProps.layout.dateFormat,
+				showPersonWithNames: this.databaseProps.layout.showPersonWithNames,
 				displayProps: this.databaseProps.layout.properties,
 				database_id: this.databaseProps.id
 			}
