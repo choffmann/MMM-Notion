@@ -70,7 +70,7 @@ Module.register("MMM-Notion", {
 
 	handleError: function (error) {
 		this.status = "error"
-		console.log(error)
+		console.error(error)
 		this.error = error
 		this.updateDom();
 	},
@@ -123,7 +123,6 @@ Module.register("MMM-Notion", {
 	socketNotificationReceived: function (notification, payload) {
 		if (notification === "MMM-Notion-DATABASE-DATA") {
 			this.databases = payload;
-			console.log(payload)
 			this.status = "success"
 			this.updateDom();
 		} else if (notification === "MMM-Notion-DATABASE-ERROR") {

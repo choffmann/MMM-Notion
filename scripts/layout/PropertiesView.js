@@ -180,7 +180,6 @@ class PropertiesView {
 	}
 
 	createPersonChipName(imageUrl, name) {
-		console.log(imageUrl)
 		if (name === null) return
 		const personContainer = document.createElement("div")
 		const personName = document.createElement("div")
