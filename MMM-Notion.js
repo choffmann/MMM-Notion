@@ -105,7 +105,8 @@ Module.register("MMM-Notion", {
 
 	getStyles: function () {
 		return [
-			"MMM-Notion.css",
+			this.file("styles/MMM-Notion.css"),
+			this.file("styles/MMM-Notion-ListView.css"),
 		];
 	},
 

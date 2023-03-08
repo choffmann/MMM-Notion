@@ -1,0 +1,30 @@
+/*
+ *
+ * MMM-Notion
+ *
+ * Cedrik Hoffmann
+ * MIT Licensed.
+ *
+ * Custom here your css module
+ *
+ */
+
+#mmm-notion {
+  max-width: 250px;
+  overflow: hidden;
+}
+
+#mmm-notion-database {
+  margin-bottom: 16px;
+}
+
+#mmm-notion-database-title {
+  font-size: smaller;
+  padding-bottom: 0;
+  font-weight: bold;
+}
+
+#mmm-notion-database-title-divider {
+  padding: 0;
+  margin: 0;
+}
