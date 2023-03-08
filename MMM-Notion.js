@@ -85,7 +85,15 @@ Module.register("MMM-Notion", {
 			if (properties.showTitle === undefined || properties.showTitle)
 				container.appendChild(databaseTitle)
 		}
-		this.createListView(container, properties)
+
+		switch (properties.layout.type) {
+			case "list":
+				this.createListView(container, properties)
+				break;
+			case "gallery":
+				this.createGalleryView(container, properties)
+				break;
+		}
 		wrapper.appendChild(container)
 	},
 
@@ -94,11 +102,18 @@ Module.register("MMM-Notion", {
 		wrapper.appendChild(listView.wrapper)
 	},
 
+	createGalleryView: function (wrapper, properties) {
+		const galleryView = new GalleryView(properties)
+		wrapper.appendChild(galleryView.wrapper)
+	},
+
 	getScripts: function () {
 		return [
 			this.file('scripts/DateFormat.js'),
 			this.file('scripts/layout/listview/ListView.js'),
 			this.file('scripts/layout/listview/ListViewElement.js'),
+			this.file('scripts/layout/galleryview/GalleryView.js'),
+			this.file('scripts/layout/galleryview/GalleryViewElement.js'),
 			this.file('scripts/layout/PropertiesView.js')
 		];
 	},
@@ -107,6 +122,7 @@ Module.register("MMM-Notion", {
 		return [
 			this.file("styles/MMM-Notion.css"),
 			this.file("styles/MMM-Notion-ListView.css"),
+			this.file("styles/MMM-Notion-GalleryView.css"),
 		];
 	},
 
@@ -123,6 +139,7 @@ Module.register("MMM-Notion", {
 	socketNotificationReceived: function (notification, payload) {
 		if (notification === "MMM-Notion-DATABASE-DATA") {
 			this.databases = payload;
+			console.log(payload)
 			this.status = "success"
 			this.updateDom();
 		} else if (notification === "MMM-Notion-DATABASE-ERROR") {
