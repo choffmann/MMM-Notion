@@ -9,6 +9,11 @@
  *
  */
 
+#mmm-notion {
+  max-width: 250px;
+  overflow: hidden;
+}
+
 #mmm-notion-database {
   margin-bottom: 16px;
 }
@@ -41,6 +46,8 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  margin-right: 16px;
+  flex-shrink: 0;
 }
 
 #mmm-notion-listview #mmm-notion-property {
@@ -48,6 +55,7 @@
   flex-direction: row;
   gap: 6px;
   align-items: center;
+  flex-shrink: 0;
 }
 
 #mmm-notion-listview-emoji {
