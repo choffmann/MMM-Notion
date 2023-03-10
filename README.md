@@ -5,6 +5,8 @@ This module shows you your favorite Notion databases on MagicMirror. All you nee
 
 ![](img/mmm-notion-showcase.png)
 
+**NOTE:** This module is currently in development status. You can already use it, but there may be some bugs or changes in the configuration 
+
 ## How to use
 
 To show your Notion Database, you need to create a [Notion integration](https://www.notion.com/my-integrations). To do that, you need Admin level access on your Workspace. Notion has a very
