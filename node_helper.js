@@ -1,3 +1,5 @@
+// noinspection JSVoidFunctionReturnValueUsed
+
 /* Magic Mirror
  * Node Helper: MMM-Notion
  *
@@ -8,34 +10,30 @@
 const NodeHelper = require("node_helper");
 const Log = require("logger");
 const {Client} = require("@notionhq/client")
+const express = require("express")
 
 module.exports = NodeHelper.create({
 	start: function () {
 		Log.log(`${this.name} is started`);
-	},
+		Log.debug("Starting express server...")
 
-	socketNotificationReceived: async function (notification, payload) {
-		switch (notification) {
-			case "HERE_IS_YOUR_CONFIG":
-				await this.makeRequest(payload.secret, payload.databases);
-				break;
-			case "UPDATE_PLEASE":
-				await this.makeRequest(payload.secret, payload.databases);
-				break;
-		}
+		this.expressApp.use(express.json())
+		this.expressApp.post("/mmm-notion/database", (req, res) => {
+			const {secret, databases} = req.body
+			this.makeRequest(secret, databases)
+				.then(data => res.send(data));
+		})
 	},
 
 	makeRequest: async function (secret, databases) {
 		const notion = new Client({auth: secret})
 		try {
-			for (const database of databases) {
-				const data = await this.makeQuery(notion, database)
-				if (database.data === undefined) database.data = []
-				data.results.forEach(e => database.data.push(e))
-			}
-			this.sendSocketNotification("MMM-Notion-DATABASE-DATA", databases);
+			return await Promise.all(databases.map(async database => {
+				return await this.makeQuery(notion, database)
+			}))
 		} catch (e) {
-			this.handleError(e)
+			Log.error(e)
+			return e
 		}
 	},
 
@@ -59,8 +57,7 @@ module.exports = NodeHelper.create({
 		}
 	},
 
-	handleError: function (error) {
-		Log.error(error)
-		this.sendSocketNotification("MMM-Notion-DATABASE-ERROR", error);
+	stop: function () {
+		Log.log(`Shutting down ${this.name}`)
 	}
 });
