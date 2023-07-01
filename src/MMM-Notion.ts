@@ -30,22 +30,31 @@ Module.register<MMMNotionOptions>("MMM-Notion", {
     updateInterval: 60000
   },
 
-  start: function (): void {
-    this.sendSocketNotification("HERE_IS_YOUR_CONFIG", this.config)
+  requiresVersion: "2.1.1",
+
+  start: function () {
+
   },
 
   getDom: function (): HTMLElement {
     const container = document.createElement('div')
-    container.id = "mmm-notion"
+    container.id = this.name.toLowerCase()
 
     const script = document.createElement('script');
     script.type = "module"
     script.src = this.file('src/main.tsx')
     container.appendChild(script)
 
-    renderApp(container)
+    renderApp(container, {...this.config, moduleName: this.name.toLowerCase(), mirrorConfig: config})
 
     return container
   },
 
+  suspend: function () {
+
+  },
+
+  resume: function () {
+
+  }
 })
