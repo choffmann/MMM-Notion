@@ -18,7 +18,7 @@ module.exports = NodeHelper.create({
 		Log.debug("Starting express server...")
 
 		this.expressApp.use(express.json())
-		this.expressApp.post("/mmm-notion/database", (req, res) => {
+		this.expressApp.post(`/${this.name.toLowerCase()}/database`, (req, res) => {
 			const {secret, databases} = req.body
 			this.makeRequest(secret, databases)
 				.then(data => res.send(data));
