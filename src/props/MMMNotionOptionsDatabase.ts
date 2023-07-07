@@ -5,6 +5,6 @@ export default interface MMMNotionOptionsDatabase {
   title: string,
   id: string,
   layout: MMMNotionLayout,
-  filter: object,
-  sorts: string[]
+  filter: any,
+  sorts: any[]
 }

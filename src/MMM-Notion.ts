@@ -50,6 +50,12 @@ Module.register<MMMNotionOptions>("MMM-Notion", {
     return container
   },
 
+  getStyles: function () {
+    return [
+      this.file("styles/MMM-Notion.css"),
+    ]
+  },
+
   suspend: function () {
 
   },

@@ -3,5 +3,7 @@ import MMMNotionOptionsDatabase from "./MMMNotionOptionsDatabase";
 export default interface MMMNotionOptions {
   secret: string,
   databases: MMMNotionOptionsDatabase[],
-  updateInterval: number
+  updateInterval: number,
+  moduleName?: string,
+  mirrorConfig?: any
 }

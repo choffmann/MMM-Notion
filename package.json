@@ -14,8 +14,10 @@
 	"homepage": "https://github.com/choffmann/MMM-Notion#readme",
 	"license": "MIT",
 	"scripts": {
-		"dev": "tsc && cd ../.. && npm start dev",
-		"build": "tsc && vite build"
+		"dev": "cd ../.. && npm start dev",
+		"build:node_helper": "LIB_NAME=node_helper yarn vite build",
+		"build:mmm_notion": "LIB_NAME=mmm_notion yarn vite build",
+		"build": "tsc && yarn build:mmm_notion && yarn build:node_helper"
 	},
 	"dependencies": {
 		"@notionhq/client": "^1.0.1",
