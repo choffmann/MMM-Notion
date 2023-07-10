@@ -1,5 +1,5 @@
 {
-	"name": "MMM-Notion",
+	"name": "mmm-notion",
 	"version": "1.0.0",
 	"description": "Display your Notion database on the MagicMirror",
 	"repository": {
