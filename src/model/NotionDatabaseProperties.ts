@@ -202,11 +202,13 @@ export interface File extends NotionProperty {
 export interface Status extends NotionProperty {
   id: string
   type: PropertyType
-  status: {
-    id: string
-    name: string
-    color: string
-  }
+  status: StatusOptions
+}
+
+export interface StatusOptions {
+  id: string
+  name: string
+  color: string
 }
 
 export interface Title extends NotionProperty {
