@@ -28,7 +28,7 @@ export interface NotionDatabaseResult {
   icon: Icon
   parent: Parent
   archived: boolean
-  properties: NotionProperty[]
+  properties: NotionProperty
   url: string
   public_url?: string
 }
@@ -36,6 +36,7 @@ export interface NotionDatabaseResult {
 export interface NotionProperty {
   id: string,
   type: PropertyType,
+
   [key: string]: any
 }
 

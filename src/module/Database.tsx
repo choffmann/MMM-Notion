@@ -18,7 +18,7 @@ const Database = ({databaseOptions}: DatabaseProps) => {
   const renderLayout = (database: NotionDatabase) => {
     switch (databaseOptions.layout.type) {
       case "listview":
-        return <ListView results={database.results}/>
+        return <ListView results={database.results} databaseOptions={databaseOptions}/>
       default:
         return <div>Unknown layout type '{databaseOptions.layout.type}'</div>
     }
