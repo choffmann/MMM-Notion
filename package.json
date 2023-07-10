@@ -17,12 +17,14 @@
 		"dev": "cd ../.. && npm start dev",
 		"build:node_helper": "LIB_NAME=node_helper yarn vite build",
 		"build:mmm_notion": "LIB_NAME=mmm_notion yarn vite build",
-		"build": "tsc && yarn build:mmm_notion && yarn build:node_helper"
+		"build": "yarn build:mmm_notion && yarn build:node_helper"
 	},
 	"dependencies": {
 		"@notionhq/client": "^1.0.1",
 		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"react-dom": "^18.2.0",
+		"react-query": "^3.39.3",
+		"rxjs": "^7.8.1"
 	},
 	"devDependencies": {
 		"@types/magicmirror-module": "^2.16.2",

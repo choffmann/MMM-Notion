@@ -45,6 +45,7 @@ Module.register<MMMNotionOptions>("MMM-Notion", {
     script.src = this.file('src/main.tsx')
     container.appendChild(script)
 
+    // @ts-ignore
     renderApp(container, {...this.config, moduleName: this.name.toLowerCase(), mirrorConfig: config})
 
     return container

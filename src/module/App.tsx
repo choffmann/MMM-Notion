@@ -1,6 +1,7 @@
 import MMMNotionOptions from "../props/MMMNotionOptions.ts";
 import AppContext from "../context/AppContext.tsx";
-import ListView from "./listview/ListView.tsx";
+import {QueryClient, QueryClientProvider} from "react-query";
+import Database from "./Database.tsx";
 
 export interface AppProps {
   config: MMMNotionOptions,
@@ -8,24 +9,14 @@ export interface AppProps {
 
 const App = ({config}: AppProps) => {
 
-  const getLayout = () => {
-    return config.databases.map(({layout: {type}, filter, id, sorts}) => {
-      switch (type) {
-        case "listview":
-          return <ListView database={{
-            id: id,
-            filter: filter,
-            sorts: sorts
-          }}/>
-        default:
-          return <div>Unknown layout type '{type}'</div>
-      }
-    })
-  }
+  const queryClient = new QueryClient()
+  const databases = config.databases.map(database => <Database databaseOptions={database}/>)
 
   return (
     <AppContext.Provider value={{config}}>
-      {getLayout()}
+      <QueryClientProvider client={queryClient}>
+        {databases}
+      </QueryClientProvider>
     </AppContext.Provider>
   )
 }

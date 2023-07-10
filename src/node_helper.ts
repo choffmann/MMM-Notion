@@ -7,7 +7,7 @@
  * MIT Licensed.
  */
 
-import {NotionDatabaseProps, NotionRequestProps} from "./hooks/useNotion.ts";
+import {NotionDatabaseProps} from "./hooks/useNotionDatabase.ts";
 import {Client} from "@notionhq/client";
 // @ts-ignore
 import {Request, Response} from "express";
@@ -17,6 +17,11 @@ import {QueryDatabaseResponse} from "@notionhq/client/build/src/api-endpoints";
 const NodeHelper = require("node_helper")
 const Log = require("logger")
 const express = require("express")
+
+export interface NotionRequestProps {
+  secret: string,
+  database: NotionDatabaseProps
+}
 
 const makeRequest = async (secret: string, database: NotionDatabaseProps): Promise<ApiResponse<QueryDatabaseResponse>> => {
   const notion = new Client({auth: secret})
