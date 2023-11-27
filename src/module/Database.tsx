@@ -2,6 +2,7 @@ import MMMNotionOptionsDatabase from "../props/MMMNotionOptionsDatabase.ts";
 import ListView from "./listview/ListView.tsx";
 import {useNotionDatabase} from "../hooks/useNotionDatabase.ts";
 import {NotionDatabase} from "../model/NotionDatabaseProperties.ts";
+import {FormattedMessage} from "react-intl";
 
 
 interface DatabaseProps {
@@ -20,17 +21,16 @@ const Database = ({databaseOptions}: DatabaseProps) => {
       case "listview":
         return <ListView results={database.results} databaseOptions={databaseOptions}/>
       default:
-        return <div>Unknown layout type '{databaseOptions.layout.type}'</div>
+        return <FormattedMessage id="unknown_layout_type" defaultMessage="Unbekanntes Layout '{layout}'" values={{layout: databaseOptions.layout.type}}/>
     }
   }
 
   return (
     <div>
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>Ein Fehler ist bei der Anfrage aufgetreten</p>}
+      {isLoading && <FormattedMessage id="request_loading" defaultMessage="Laden..."/>}
+      {isError && <FormattedMessage id="request_error" defaultMessage="Ein Fehler ist bei der Anfrage aufgetreten"/>}
       {data !== undefined && renderLayout(data)}
     </div>
-    // <>{isError ? "Ein Fehler ist bei der Anfrage aufgetreten" : renderLayout()}</>
   )
 }
 

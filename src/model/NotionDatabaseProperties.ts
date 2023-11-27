@@ -159,11 +159,13 @@ export interface TextAnnotations {
 export interface Date extends NotionProperty {
   id: string
   type: PropertyType
-  date?: {
-    start: string
-    end: any
-    time_zone: any
-  }
+  date?: DateOptions
+}
+
+export interface DateOptions {
+  start: string
+  end: string
+  time_zone: string
 }
 
 export interface CreatedTime extends NotionProperty {

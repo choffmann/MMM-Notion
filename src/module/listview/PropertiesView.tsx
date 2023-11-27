@@ -11,6 +11,8 @@ import People from "../properties/People.tsx";
 import Email from "../properties/Email.tsx";
 import MultiSelect from "../properties/MultiSelect.tsx";
 import Status from "../properties/Status.tsx";
+import PhoneNumber from "../properties/PhoneNumber.tsx";
+import DateProperty from "../properties/DateProperty.tsx";
 
 export interface PropertiesViewProps {
   notionProperties: NotionProperty,
@@ -36,8 +38,6 @@ const PropertiesView = ({notionProperties, databaseOptions}: PropertiesViewProps
 
   const propsList = propsToShow.map(property => {
     switch (property.type) {
-      case "title":
-        break;
       case "select":
         return <Select value={property.select.name} color={property.select.color}/>
       case "url":
@@ -47,7 +47,7 @@ const PropertiesView = ({notionProperties, databaseOptions}: PropertiesViewProps
       case "created_time":
         break;
       case "phone_number":
-        break;
+        return <PhoneNumber number={property.phone_number}/>
       case "created_by":
         if (property.created_by.object === "user")
           return <Person name={property.created_by.name} imageUrl={property.created_by.avatar_url} showWithNames={databaseOptions.layout.showPersonWithNames}/>
@@ -65,15 +65,13 @@ const PropertiesView = ({notionProperties, databaseOptions}: PropertiesViewProps
       case "status":
         return <Status status={property.status}/>
       case "date":
-        break;
+        return <DateProperty date={property.date} dateFormat={databaseOptions.layout.dateFormat}/>
       case "checkbox":
         return <Checkbox checked={property.checkbox}/>
       case "rich_text":
         return <RichText rich_text={property.rich_text}/>
       case "number":
         return <Number number={property.number}/>
-      default:
-        return <div>Prop</div>
     }
   })
 
