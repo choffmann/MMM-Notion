@@ -36,10 +36,13 @@ Module.register("MMM-Notion", {
 		this.databases = [];
 		this.status = "loading"
 		this.error = ""
+		this.id = Date.now() + Math.floor(Math.random() * 100)
 
-		this.sendSocketNotification("HERE_IS_YOUR_CONFIG", this.config);
+		this.config = {...this.config, callId: this.id}
+		this.sendSocketNotification("MMM-NOTION-HERE_IS_YOUR_CONFIG", this.config);
+		self.sendSocketNotification("MMM-NOTION-UPDATE_PLEASE", self.id);
 		setInterval(function () {
-			self.sendSocketNotification("UPDATE_PLEASE", self.config);
+			self.sendSocketNotification("MMM-NOTION-UPDATE_PLEASE", self.id);
 			self.updateDom();
 		}, this.config.updateInterval);
 	},
@@ -122,11 +125,12 @@ Module.register("MMM-Notion", {
 
 	// socketNotificationReceived from helper
 	socketNotificationReceived: function (notification, payload) {
-		if (notification === "MMM-Notion-DATABASE-DATA") {
+		console.log("get notify", this.id, notification)
+		if (notification === `MMM-Notion-DATABASE-DATA-${this.id}`) {
 			this.databases = payload;
 			this.status = "success"
 			this.updateDom();
-		} else if (notification === "MMM-Notion-DATABASE-ERROR") {
+		} else if (notification === `MMM-Notion-DATABASE-ERROR-${this.id}`) {
 			this.handleError(JSON.parse(payload.body).message)
 		}
 	},
