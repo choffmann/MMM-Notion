@@ -6,9 +6,10 @@
  */
 
 class PropertiesView {
-	constructor(config) {
+	constructor(config, notionProps) {
 		this.wrapper = this.createWrapper()
 		this.config = config
+		this.notionProps = notionProps
 	}
 
 	createWrapper() {
@@ -17,10 +18,13 @@ class PropertiesView {
 		return propContainer
 	}
 
-	getProperty(notionProps, propNames) {
+	getProperty(properties, propNames) {
 		propNames.forEach(propName => {
-			const property = notionProps[propName]
+			const property = properties[propName]
 			switch (property.type) {
+				case "title":
+					this.createTitleWrapper()
+					break;
 				case "checkbox":
 					this.createCheckbox(property.checkbox)
 					break;
@@ -70,6 +74,36 @@ class PropertiesView {
 					break;
 			}
 		})
+	}
+	createTitleWrapper() {
+		const titleContainer = document.createElement("div")
+		titleContainer.id = "mmm-notion-listview-titleContainer"
+		this.createIcon(titleContainer, this.notionProps.icon)
+		this.createTitle(titleContainer)
+		this.wrapper.appendChild(titleContainer)
+	}
+
+	createTitle(titleContainer) {
+		const titleDom = document.createElement("div")
+		titleDom.id = "mmm-notion-listview-title"
+		titleDom.innerText = this.findTitleProp(this.notionProps.properties)
+		titleContainer.appendChild(titleDom)
+	}
+
+	findTitleProp(notionProps) {
+		for (const key in notionProps) {
+			if (notionProps.hasOwnProperty.call(notionProps, key) && notionProps[key].hasOwnProperty('type') && notionProps[key].type === "title") {
+				return notionProps[key].title[0].text.content
+			}
+		}
+	}
+
+	createIcon(titleContainer, icon) {
+		if (icon === null || icon.type === "external") return
+		const emojiDom = document.createElement("div")
+		emojiDom.id = "mmm-notion-listview-emoji"
+		emojiDom.innerText = icon.emoji
+		titleContainer.appendChild(emojiDom)
 	}
 
 	createCheckbox(value) {
