@@ -5,7 +5,7 @@ This module shows you your favorite Notion databases on MagicMirror. All you nee
 
 ![](img/mmm-notion-showcase.png)
 
-**NOTE:** This module is currently in development status. You can already use it, but there may be some bugs or changes in the configuration 
+**NOTE:** This module is currently in development status. You can already use it, but there may be some bugs or changes in the configuration
 
 ## How to use
 
@@ -93,21 +93,22 @@ var config = {
 
 ## Configuration options
 
-| Option                                 | Description                                                                                                                                                                                                          |
-|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `secret`                               | *Required* Your Notion secret key goes here                                                                                                                                                                          |
-| `updateInterval`                       | *Optional* Interval to update Notion database <br><br>**Type:** `int`(milliseconds) <br>Default 60000 milliseconds (1 minute)                                                                                        |
-| `databases`                            | *Required* List of databases from Notion. Here you can set the title, properties, filter and more for the database                                                                                                   |
-| `databases.title`                      | *Optional* Title of the database, with will display over the database content. If empty, the title will be ignored                                                                                                   |
-| `databases.showTitle`                  | *Optional* Option to set a title, but manually hide it <br><br>**Type:** `boolean`<br>Default `true`                                                                                                                 |
-| `databases.id`                         | *Required* id of the database from Notion                                                                                                                                                                            |
-| `databases.layout`                     | *Required* Information about the layout to display the database information                                                                                                                                          |
-| `databases.layout.type`                | *Required* Set the type of the different views. Unfortunately there is only one view `listview` implemented for now. <br><br>**Type:** `listview`<br>Default `listview`                                              |
-| `databases.layout.dateFormat`          | *Optional* Define the date format. You can use the date formats from Notion. <br><br>**Type:** `full_date &#124; month_day_year &#124; day_month_year &#124; year_month_day &#124; relative` <br>Default `full_date` |
-| `databases.layout.showPersonWithNames` | *Optional* To save space, the name of a person is hidden. But you can enable the name by setting the property to `true` <br><br>**Type:** `boolean` <br>Default `false`                                              |
-| `databases.layout.properties`          | *Required* List of Properties, which will displayed on the view. Please use the exact name like in Notion. If leaving empty, there will be no properties visible                                                     |
-| `databases.filter`                     | *Optional* Here you can set a filter for the database. You can use the exact options from Notion, which are described [here](https://developers.notion.com/reference/post-database-query-filter)                     |
-| `databases.sorts`                      | *Optional* Like the `filter`, you can specify the order here. You can also use the exact options from Notion, which are described [here](https://developers.notion.com/reference/post-database-query-sort)           |
+| Option                                 | Description                                                                                                                                                                                                                                                  |
+|----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `secret`                               | *Required* Your Notion secret key goes here                                                                                                                                                                                                                  |
+| `updateInterval`                       | *Optional* Interval to update Notion database <br><br>**Type:** `int`(milliseconds) <br>Default 60000 milliseconds (1 minute)                                                                                                                                |
+| `databases`                            | *Required* List of databases from Notion. Here you can set the title, properties, filter and more for the database                                                                                                                                           |
+| `databases.title`                      | *Optional* Title of the database, with will display over the database content. If empty, the title will be ignored                                                                                                                                           |
+| `databases.showTitle`                  | *Optional* Option to set a title, but manually hide it <br><br>**Type:** `boolean`<br>Default `true`                                                                                                                                                         |
+| `databases.id`                         | *Required* id of the database from Notion                                                                                                                                                                                                                    |
+| `databases.layout`                     | *Required* Information about the layout to display the database information                                                                                                                                                                                  |
+| `databases.layout.type`                | *Required* Set the type of the different views. Unfortunately there is only one view `listview` implemented for now. <br><br>**Type:** `listview`<br>Default `listview`                                                                                      |
+| `databases.layout.dateFormat`          | *Optional* Define the date format. You can use the date formats from Notion. <br><br>**Type:** `full_date &#124; month_day_year &#124; day_month_year &#124; year_month_day &#124; relative` <br>Default `full_date`                                         |
+| `databases.layout.showPersonWithNames` | *Optional* To save space, the name of a person is hidden. But you can enable the name by setting the property to `true` <br><br>**Type:** `boolean` <br>Default `false`                                                                                      |
+| `databases.layout.displayElementTitle` | *Optional* If set to true, the title of each element is displayed at the beginning. The title property in the properties array is ignored. If it is set to false, you can arrange the properties in the array <br><br>**Type:** `boolean` <br>Default `true` |
+| `databases.layout.properties`          | *Required* List of Properties, which will displayed on the view. Please use the exact name like in Notion. If leaving empty, there will be no properties visible                                                                                             |
+| `databases.filter`                     | *Optional* Here you can set a filter for the database. You can use the exact options from Notion, which are described [here](https://developers.notion.com/reference/post-database-query-filter)                                                             |
+| `databases.sorts`                      | *Optional* Like the `filter`, you can specify the order here. You can also use the exact options from Notion, which are described [here](https://developers.notion.com/reference/post-database-query-sort)                                                   |
 
 ## See also
 
