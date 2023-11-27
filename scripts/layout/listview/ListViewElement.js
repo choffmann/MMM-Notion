@@ -20,15 +20,27 @@ class ListViewElement {
 	}
 
 	init() {
+		this.checkElementTitle()
 		if (this.config.displayProps.length > 0)
 			this.createProperties(this.notionProps.properties, this.config.displayProps)
 	}
 
 
+	checkElementTitle() {
+		if (this.config.displayElementTitle) {
+			const titlePropName = Object.entries(this.notionProps.properties).find(([_, prop]) => prop.type === "title")[0]
+			this.config.displayProps = this.config.displayProps.filter(prop => prop !== titlePropName)
+			this.config.displayProps.unshift(titlePropName)
+		}
+	}
+
 	createProperties(properties, propNames) {
 		if (this.checkValidPropName(properties, propNames, this.config.database_id)) return
 		const propertyElements = new PropertiesView(this.config, this.notionProps)
-		propertyElements.getProperty(properties, propNames)
+		propNames.forEach(propName => {
+			const property = this.notionProps.properties[propName]
+			propertyElements.createProperty(property)
+		})
 		this.wrapper.appendChild(propertyElements.wrapper)
 	}
 

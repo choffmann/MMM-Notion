@@ -18,6 +18,7 @@ Module.register("MMM-Notion", {
 				layout: {
 					type: "listview",
 					showPersonWithNames: false,
+					displayElementTitle: true,
 					dateFormat: "full_date", // full_date, month_day_year, day_month_year, year_month_day, relative
 					properties: []
 				},
