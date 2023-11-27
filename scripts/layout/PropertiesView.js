@@ -6,9 +6,10 @@
  */
 
 class PropertiesView {
-	constructor(config) {
+	constructor(config, notionProps) {
 		this.wrapper = this.createWrapper()
 		this.config = config
+		this.notionProps = notionProps
 	}
 
 	createWrapper() {
@@ -17,59 +18,90 @@ class PropertiesView {
 		return propContainer
 	}
 
-	getProperty(notionProps, propNames) {
-		propNames.forEach(propName => {
-			const property = notionProps[propName]
-			switch (property.type) {
-				case "checkbox":
-					this.createCheckbox(property.checkbox)
-					break;
-				case "rich_text":
-					this.createText(property.rich_text)
-					break;
-				case "number":
-					this.createPhoneNumber(property.number)
-					break;
-				case "select":
-					this.createSelect(property.select.name, property.select.color)
-					break;
-				case "url":
-					this.createUrl(property.url)
-					break;
-				case "last_edited_time":
-					this.createEditTime(property.last_edited_time)
-					break;
-				case "created_time":
-					this.createEditTime(property.created_time)
-					break;
-				case "phone_number":
-					this.createPhoneNumber(property.phone_number)
-					break;
-				case "created_by":
-					if (property.created_by.object === "user")
-						this.createPerson(property.created_by.avatar_url, property.created_by.name)
-					break;
-				case "last_edited_by":
-					if (property.last_edited_by.object === "user")
-						this.createPerson(property.last_edited_by.avatar_url, property.last_edited_by.name)
-					break;
-				case "people":
-					this.createMultiPerson(property.people)
-					break;
-				case "email":
-					this.createEmail(property.email)
-					break;
-				case "multi_select":
-					this.createMultiSelect(property.multi_select)
-					break;
-				case "status":
-					this.createStatus(property.status)
-					break;
-				case "date":
-					this.createDate(property.date)
-					break;
+	createProperty(property) {
+		switch (property.type) {
+			case "title":
+				this.createTitleWrapper()
+				break;
+			case "checkbox":
+				this.createCheckbox(property.checkbox)
+				break;
+			case "rich_text":
+				this.createText(property.rich_text)
+				break;
+			case "number":
+				this.createPhoneNumber(property.number)
+				break;
+			case "select":
+				this.createSelect(property.select.name, property.select.color)
+				break;
+			case "url":
+				this.createUrl(property.url)
+				break;
+			case "last_edited_time":
+				this.createEditTime(property.last_edited_time)
+				break;
+			case "created_time":
+				this.createEditTime(property.created_time)
+				break;
+			case "phone_number":
+				this.createPhoneNumber(property.phone_number)
+				break;
+			case "created_by":
+				if (property.created_by.object === "user")
+					this.createPerson(property.created_by.avatar_url, property.created_by.name)
+				break;
+			case "last_edited_by":
+				if (property.last_edited_by.object === "user")
+					this.createPerson(property.last_edited_by.avatar_url, property.last_edited_by.name)
+				break;
+			case "people":
+				this.createMultiPerson(property.people)
+				break;
+			case "email":
+				this.createEmail(property.email)
+				break;
+			case "multi_select":
+				this.createMultiSelect(property.multi_select)
+				break;
+			case "status":
+				this.createStatus(property.status)
+				break;
+			case "date":
+				this.createDate(property.date)
+				break;
+		}
+	}
+
+	createTitleWrapper() {
+		const titleContainer = document.createElement("div")
+		titleContainer.id = "mmm-notion-listview-titleContainer"
+		this.createIcon(titleContainer, this.notionProps.icon)
+		this.createTitle(titleContainer)
+		this.wrapper.appendChild(titleContainer)
+	}
+
+	createTitle(titleContainer) {
+		const titleDom = document.createElement("div")
+		titleDom.id = "mmm-notion-listview-title"
+		titleDom.innerText = this.findTitleProp(this.notionProps.properties)
+		titleContainer.appendChild(titleDom)
+	}
+
+	findTitleProp(notionProps) {
+		for (const key in notionProps) {
+			if (notionProps.hasOwnProperty.call(notionProps, key) && notionProps[key].hasOwnProperty('type') && notionProps[key].type === "title") {
+				return notionProps[key].title[0].text.content
 			}
-		})
+		}
+	}
+
+	createIcon(titleContainer, icon) {
+		if (icon === null || icon.type === "external") return
+		const emojiDom = document.createElement("div")
+		emojiDom.id = "mmm-notion-listview-emoji"
+		emojiDom.innerText = icon.emoji
+		titleContainer.appendChild(emojiDom)
 	}
 
 	createCheckbox(value) {

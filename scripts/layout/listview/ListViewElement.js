@@ -20,46 +20,27 @@ class ListViewElement {
 	}
 
 	init() {
-		this.createTitleWrapper()
+		this.checkElementTitle()
 		if (this.config.displayProps.length > 0)
 			this.createProperties(this.notionProps.properties, this.config.displayProps)
 	}
 
-	createTitleWrapper() {
-		const titleContainer = document.createElement("div")
-		titleContainer.id = "mmm-notion-listview-titleContainer"
-		this.createIcon(titleContainer, this.notionProps.icon)
-		this.createTitle(titleContainer)
-		this.wrapper.appendChild(titleContainer)
-	}
 
-	createTitle(titleContainer) {
-		const titleDom = document.createElement("div")
-		titleDom.id = "mmm-notion-listview-title"
-		titleDom.innerText = this.findTitleProp(this.notionProps.properties)
-		titleContainer.appendChild(titleDom)
-	}
-
-	findTitleProp(notionProps) {
-		for (const key in notionProps) {
-			if (notionProps.hasOwnProperty.call(notionProps, key) && notionProps[key].hasOwnProperty('type') && notionProps[key].type === "title") {
-				return notionProps[key].title[0].text.content
-			}
+	checkElementTitle() {
+		if (this.config.displayElementTitle) {
+			const titlePropName = Object.entries(this.notionProps.properties).find(([_, prop]) => prop.type === "title")[0]
+			this.config.displayProps = this.config.displayProps.filter(prop => prop !== titlePropName)
+			this.config.displayProps.unshift(titlePropName)
 		}
 	}
 
-	createIcon(titleContainer, icon) {
-		if (icon === null || icon.type === "external") return
-		const emojiDom = document.createElement("div")
-		emojiDom.id = "mmm-notion-listview-emoji"
-		emojiDom.innerText = icon.emoji
-		titleContainer.appendChild(emojiDom)
-	}
-
-	createProperties(notionProps, propNames) {
-		if (this.checkValidPropName(notionProps, propNames, this.config.database_id)) return
-		const propertyElements = new PropertiesView(this.config)
-		propertyElements.getProperty(notionProps, propNames)
+	createProperties(properties, propNames) {
+		if (this.checkValidPropName(properties, propNames, this.config.database_id)) return
+		const propertyElements = new PropertiesView(this.config, this.notionProps)
+		propNames.forEach(propName => {
+			const property = this.notionProps.properties[propName]
+			propertyElements.createProperty(property)
+		})
 		this.wrapper.appendChild(propertyElements.wrapper)
 	}
 

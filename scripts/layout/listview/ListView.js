@@ -28,7 +28,8 @@ class ListView {
 				dateFormat: this.databaseProps.layout.dateFormat,
 				showPersonWithNames: this.databaseProps.layout.showPersonWithNames,
 				displayProps: this.databaseProps.layout.properties,
-				database_id: this.databaseProps.id
+				database_id: this.databaseProps.id,
+				displayElementTitle: this.databaseProps.layout.displayElementTitle,
 			}
 			const element = new ListViewElement(props, config)
 			this.wrapper.appendChild(element.wrapper)
