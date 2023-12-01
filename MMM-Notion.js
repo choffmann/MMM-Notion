@@ -43,7 +43,6 @@ Module.register("MMM-Notion", {
 		self.sendSocketNotification("MMM-NOTION-UPDATE_PLEASE", self.id);
 		setInterval(function () {
 			self.sendSocketNotification("MMM-NOTION-UPDATE_PLEASE", self.id);
-			self.updateDom();
 		}, this.config.updateInterval);
 	},
 
@@ -125,9 +124,9 @@ Module.register("MMM-Notion", {
 
 	// socketNotificationReceived from helper
 	socketNotificationReceived: function (notification, payload) {
-		console.log("get notify", this.id, notification)
 		if (notification === `MMM-Notion-DATABASE-DATA-${this.id}`) {
 			this.databases = payload;
+			console.log(payload)
 			this.status = "success"
 			this.updateDom();
 		} else if (notification === `MMM-Notion-DATABASE-ERROR-${this.id}`) {

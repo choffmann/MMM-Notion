@@ -26,22 +26,21 @@ module.exports = NodeHelper.create({
 				const callElement = this.calls.filter(e => e.callId === payload)
 				if (callElement.length === 1) {
 					const call = callElement[0]
-					const databases = await this.makeRequest(call.secret, call.databases, (error) => this.handleError(error, call.callId));
-					this.sendSocketNotification(`MMM-Notion-DATABASE-DATA-${call.callId}`, databases);
+					await this.makeRequest(call, (error) => this.handleError(error, call.callId));
 				}
 				break;
 		}
 	},
 
-	makeRequest: async function (secret, databases, onError) {
-		const notion = new Client({auth: secret})
+	makeRequest: async function (call, onError) {
+		const notion = new Client({auth: call.secret})
 		try {
-			for (const database of databases) {
+			for (const database of call.databases) {
 				const data = await this.makeQuery(notion, database)
 				if (database.data === undefined) database.data = []
-				data.results.forEach(e => database.data.push(e))
+				database.data = data.results
 			}
-			return databases
+			this.sendSocketNotification(`MMM-Notion-DATABASE-DATA-${call.callId}`, call.databases);
 		} catch (e) {
 			onError(e)
 		}
